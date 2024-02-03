@@ -14,6 +14,7 @@ import Tier from "./model/tier";
 import Transaction from "./model/transaction";
 import TransactionProduct from "./model/transaction_product";
 import Loyalty from "./model/loyalty";
+import { initScheduler } from "./utils/scheduler";
 
 const createServer = async () => {
   var app = express();
@@ -40,6 +41,8 @@ const createServer = async () => {
   // await TransactionProduct.sync();
   // await Loyalty.sync({ force: true });
   // await PointHistory.sync({ force: true });
+
+  initScheduler(); // init scheduler for birthday reward
 
   return app;
 };

@@ -38,7 +38,7 @@ const Member = sequelize.define("Member", {
     allowNull: false,
   },
   referral: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
   },
   earnedPoint: {
     type: DataTypes.INTEGER,
@@ -50,6 +50,15 @@ const Member = sequelize.define("Member", {
     allowNull: false,
     defaultValue: 0,
   },
+});
+
+Member.hasMany(Member, {
+  foreignKey: "referral",
+  as: "Member",
+});
+Member.belongsTo(Member, {
+  foreignKey: "referral",
+  as: "Referral",
 });
 
 export default Member;

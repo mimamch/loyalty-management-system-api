@@ -4,6 +4,7 @@ import TierRouter from "./tier_routes";
 import MemberRoute from "./member_routes";
 import TransactionRouter from "./transaction_routes";
 import LoyaltyRouter from "./loyalty_routes";
+import ReportRoute from "./report_routes";
 
 const MainRouter = Router();
 
@@ -12,5 +13,6 @@ MainRouter.use("/tier", TierRouter);
 MainRouter.use("/member", MemberRoute);
 MainRouter.use("/transaction", TransactionRouter);
 MainRouter.use("/loyalty", LoyaltyRouter);
+MainRouter.use("/report", ReportRoute);
 
 export default MainRouter;
