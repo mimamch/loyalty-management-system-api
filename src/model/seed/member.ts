@@ -1,6 +1,6 @@
 import Member from "../membership";
 
-(async () => {
+export const seedMember = async () => {
   const data = await Member.create({
     name: "John Doe",
     email: "john@gmail.com",
@@ -12,4 +12,4 @@ import Member from "../membership";
   });
 
   console.log(data);
-})();
+};

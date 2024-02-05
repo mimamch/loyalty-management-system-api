@@ -1,0 +1,971 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "",
+    "version": "1.0.0",
+    "title": "Loyalti Management API"
+  },
+  "host": "localhost:5000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "auth",
+      "description": "Authentication for admin"
+    },
+    {
+      "name": "member",
+      "description": "Membership data"
+    },
+    {
+      "name": "loyalty",
+      "description": "loyalty reward"
+    },
+    {
+      "name": "transaction",
+      "description": "member transaction"
+    },
+    {
+      "name": "tier",
+      "description": "tier management"
+    },
+    {
+      "name": "report",
+      "description": "data report"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/user/sign-in": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "sign in to get token",
+        "description": "",
+        "operationId": "signIn",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "admin@gmail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "Password123@"
+                },
+                "rememberMe": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "example": {
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzZXIiOjMsImlhdCI6MTcwNzA5Nzc5NiwiZXhwIjoxNzA5Njg5Nzk2fQ.MRax91g-Sj9GUsDAqwFMd1lybVdYNdCLOqsMrZv50WU"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/member": {
+      "get": {
+        "tags": [
+          "member"
+        ],
+        "summary": "get member list",
+        "description": "",
+        "operationId": "getmember",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "example": [
+                    {
+                      "memberNo": 2,
+                      "name": "orang diajak",
+                      "email": "baru@gmail.com",
+                      "phone": "121223232",
+                      "joinDate": "2024-02-03T13:49:44.871Z",
+                      "remainedPoint": 0,
+                      "status": "active"
+                    },
+                    {
+                      "memberNo": 1,
+                      "name": "John Doe",
+                      "email": "john@gmail.com",
+                      "phone": "08123456789",
+                      "joinDate": "2024-02-03T13:37:11.695Z",
+                      "remainedPoint": 17098,
+                      "status": "active"
+                    },
+                    0
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/member/{id}": {
+      "get": {
+        "tags": [
+          "member"
+        ],
+        "summary": "get member detail",
+        "description": "",
+        "operationId": "getmemberDetail",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "integer",
+            "default": 1,
+            "required": true,
+            "description": "ID of pet to update"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "schema": {
+              "type": "object",
+              "example": {
+                "name": "John Doe",
+                "email": "john@gmail.com",
+                "phone": "08123456789",
+                "birthDate": "2024-02-03T13:37:11.695Z",
+                "address": "Jl. Raya Abc No. 123",
+                "joinDate": "2024-02-03T13:37:11.695Z",
+                "referral": null,
+                "earnedPoint": 1000,
+                "redeemedPoint": 0,
+                "remainedPoint": 1000,
+                "status": "active",
+                "historyPoint": [
+                  {
+                    "transactionId": 36,
+                    "transactionDate": "2024-02-05T02:08:12.463Z",
+                    "transactionName": "Promo Member Get Member",
+                    "type": "earned",
+                    "point": 1000
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/member/referral": {
+      "post": {
+        "tags": [
+          "member"
+        ],
+        "summary": "member get member",
+        "description": "",
+        "operationId": "memberGetMember",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "memberId": {
+                  "type": "number",
+                  "example": "1"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "Orang baru"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "baru@gmail.com"
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "0812346678"
+                },
+                "birthDate": {
+                  "type": "string",
+                  "example": "2000-01-02T00:00:00Z"
+                },
+                "address": {
+                  "type": "string",
+                  "example": "Jl. raya abc no.123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "schema": {
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "example": {
+                    "earnedPoint": 0,
+                    "redeemedPoint": 0,
+                    "id": 12,
+                    "name": "Orang baru",
+                    "email": "baru@gmail.com",
+                    "phone": "0812346678",
+                    "joinDate": "2024-02-05T02:08:12.302Z",
+                    "status": "active",
+                    "birthDate": "2000-01-02T00:00:00.000Z",
+                    "address": "Jl. raya abc no.123",
+                    "referral": 1,
+                    "updatedAt": "2024-02-05T02:08:12.303Z",
+                    "createdAt": "2024-02-05T02:08:12.303Z"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/member/redeem": {
+      "post": {
+        "tags": [
+          "member"
+        ],
+        "summary": "member redeem point",
+        "description": "",
+        "operationId": "memberRedeemPoint",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "memberId": {
+                  "type": "number",
+                  "example": 1
+                },
+                "amount": {
+                  "type": "number",
+                  "example": 5
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "schema": {
+              "type": "object",
+              "example": {
+                "message": "Point redeemed"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/loyalty": {
+      "post": {
+        "tags": [
+          "loyalty"
+        ],
+        "summary": "add new loyalty event",
+        "description": "",
+        "operationId": "loyalyAdd",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Member Get Member Event"
+                },
+                "onTransactionAmount": {
+                  "type": "number",
+                  "example": null
+                },
+                "onQty": {
+                  "type": "number",
+                  "example": null
+                },
+                "onFirstPurchase": {
+                  "type": "boolean",
+                  "example": null
+                },
+                "onReferral": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "onMemberActivity": {
+                  "type": "boolean",
+                  "example": null
+                },
+                "onMemberBirthday": {
+                  "type": "boolean",
+                  "example": null
+                },
+                "percentagePoint": {
+                  "type": "number",
+                  "example": null
+                },
+                "maxPercentagePoint": {
+                  "type": "number",
+                  "example": null
+                },
+                "fixedPoint": {
+                  "type": "number",
+                  "example": 5000
+                },
+                "start": {
+                  "type": "string",
+                  "example": "2024-02-03T09:27:43.066Z"
+                },
+                "end": {
+                  "type": "string",
+                  "example": "2025-02-03T09:27:43.066Z"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "schema": {
+              "type": "object",
+              "example": {
+                "data": {
+                  "name": "Member Get Member Event",
+                  "onTransactionAmount": null,
+                  "onQty": null,
+                  "onFirstPurchase": null,
+                  "onReferral": true,
+                  "onMemberActivity": null,
+                  "onMemberBirthday": null,
+                  "percentagePoint": null,
+                  "maxPercentagePoint": null,
+                  "fixedPoint": 5000,
+                  "start": "2024-02-03T09:27:43.066Z",
+                  "end": "2025-02-03T09:27:43.066Z"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "loyalty"
+        ],
+        "summary": "get all loyalties",
+        "description": "",
+        "operationId": "getLoyalties",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "schema": {
+              "type": "object",
+              "example": {
+                "data": [
+                  {
+                    "id": 1,
+                    "name": "Promo Akhir Tahun",
+                    "onTransactionAmount": 5000,
+                    "onQty": null,
+                    "onFirstPurchase": null,
+                    "onReferral": null,
+                    "onMemberActivity": null,
+                    "onMemberBirthday": null,
+                    "percentagePoint": 5,
+                    "maxPercentagePoint": null,
+                    "fixedPoint": null,
+                    "start": null,
+                    "end": null,
+                    "createdAt": "2024-02-03T09:16:58.427Z",
+                    "updatedAt": "2024-02-03T09:16:58.427Z"
+                  },
+                  {
+                    "id": 2,
+                    "name": "Promo Member Get Member",
+                    "onTransactionAmount": null,
+                    "onQty": null,
+                    "onFirstPurchase": null,
+                    "onReferral": true,
+                    "onMemberActivity": null,
+                    "onMemberBirthday": null,
+                    "percentagePoint": null,
+                    "maxPercentagePoint": null,
+                    "fixedPoint": 1000,
+                    "start": null,
+                    "end": null,
+                    "createdAt": "2024-02-03T09:26:21.973Z",
+                    "updatedAt": "2024-02-03T09:26:21.973Z"
+                  },
+                  {
+                    "id": 3,
+                    "name": "Promo First Purchase",
+                    "onTransactionAmount": null,
+                    "onQty": null,
+                    "onFirstPurchase": true,
+                    "onReferral": null,
+                    "onMemberActivity": null,
+                    "onMemberBirthday": null,
+                    "percentagePoint": null,
+                    "maxPercentagePoint": null,
+                    "fixedPoint": 1000,
+                    "start": "2024-02-03T09:27:43.066Z",
+                    "end": "2024-02-04T09:27:43.066Z",
+                    "createdAt": "2024-02-03T09:29:41.927Z",
+                    "updatedAt": "2024-02-03T09:29:41.927Z"
+                  },
+                  {
+                    "id": 4,
+                    "name": "Promo First Purchase",
+                    "onTransactionAmount": null,
+                    "onQty": null,
+                    "onFirstPurchase": true,
+                    "onReferral": null,
+                    "onMemberActivity": null,
+                    "onMemberBirthday": null,
+                    "percentagePoint": null,
+                    "maxPercentagePoint": null,
+                    "fixedPoint": 1000,
+                    "start": "2024-02-03T09:27:43.066Z",
+                    "end": "2024-02-04T09:27:43.066Z",
+                    "createdAt": "2024-02-03T09:30:18.611Z",
+                    "updatedAt": "2024-02-03T09:30:18.611Z"
+                  },
+                  {
+                    "id": 5,
+                    "name": "Promo First Purchase Expired",
+                    "onTransactionAmount": null,
+                    "onQty": null,
+                    "onFirstPurchase": true,
+                    "onReferral": null,
+                    "onMemberActivity": null,
+                    "onMemberBirthday": null,
+                    "percentagePoint": null,
+                    "maxPercentagePoint": null,
+                    "fixedPoint": 1000,
+                    "start": "2024-01-01T09:27:43.066Z",
+                    "end": "2024-01-02T09:27:43.066Z",
+                    "createdAt": "2024-02-03T09:30:38.442Z",
+                    "updatedAt": "2024-02-03T09:30:38.442Z"
+                  },
+                  {
+                    "id": 6,
+                    "name": "Member Activity",
+                    "onTransactionAmount": null,
+                    "onQty": null,
+                    "onFirstPurchase": null,
+                    "onReferral": null,
+                    "onMemberActivity": true,
+                    "onMemberBirthday": null,
+                    "percentagePoint": null,
+                    "maxPercentagePoint": null,
+                    "fixedPoint": 100,
+                    "start": "2024-02-03T09:27:43.066Z",
+                    "end": "2024-02-04T09:27:43.066Z",
+                    "createdAt": "2024-02-03T14:04:46.031Z",
+                    "updatedAt": "2024-02-03T14:04:46.031Z"
+                  },
+                  {
+                    "id": 7,
+                    "name": "Happy Birthday",
+                    "onTransactionAmount": null,
+                    "onQty": null,
+                    "onFirstPurchase": null,
+                    "onReferral": null,
+                    "onMemberActivity": null,
+                    "onMemberBirthday": true,
+                    "percentagePoint": null,
+                    "maxPercentagePoint": null,
+                    "fixedPoint": 5000,
+                    "start": "2024-02-03T09:27:43.066Z",
+                    "end": "2024-02-04T09:27:43.066Z",
+                    "createdAt": "2024-02-03T15:20:13.459Z",
+                    "updatedAt": "2024-02-03T15:20:13.459Z"
+                  },
+                  {
+                    "id": 8,
+                    "name": "Member Get Member Event",
+                    "onTransactionAmount": null,
+                    "onQty": null,
+                    "onFirstPurchase": null,
+                    "onReferral": true,
+                    "onMemberActivity": null,
+                    "onMemberBirthday": null,
+                    "percentagePoint": null,
+                    "maxPercentagePoint": null,
+                    "fixedPoint": 5000,
+                    "start": "2024-02-03T09:27:43.066Z",
+                    "end": "2025-02-03T09:27:43.066Z",
+                    "createdAt": "2024-02-05T02:28:48.218Z",
+                    "updatedAt": "2024-02-05T02:28:48.218Z"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transaction": {
+      "post": {
+        "tags": [
+          "transaction"
+        ],
+        "summary": "add new member transaction",
+        "description": "",
+        "operationId": "transactionAdd",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "memberNo": {
+                  "type": "number",
+                  "example": "1"
+                },
+                "items": {
+                  "type": "array",
+                  "example": [
+                    {
+                      "itemName": "Bakso",
+                      "itemPrice": 15000,
+                      "qty": 3
+                    },
+                    {
+                      "itemName": "Mie Ayam",
+                      "itemPrice": 15000,
+                      "qty": 2
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "schema": {
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "example": {
+                    "data": {
+                      "id": "TRINV/000007/05022024",
+                      "totalAmount": 75000,
+                      "memberId": 1,
+                      "updatedAt": "2024-02-05T02:35:56.538Z",
+                      "createdAt": "2024-02-05T02:35:56.538Z",
+                      "items": [
+                        {
+                          "id": 21,
+                          "productName": "Bakso",
+                          "productPrice": 15000,
+                          "subTotal": 45000,
+                          "productQty": 3,
+                          "transactionId": "TRINV/000007/05022024",
+                          "createdAt": "2024-02-05T02:35:56.569Z",
+                          "updatedAt": "2024-02-05T02:35:56.569Z"
+                        },
+                        {
+                          "id": 22,
+                          "productName": "Mie Ayam",
+                          "productPrice": 15000,
+                          "subTotal": 30000,
+                          "productQty": 2,
+                          "transactionId": "TRINV/000007/05022024",
+                          "createdAt": "2024-02-05T02:35:56.569Z",
+                          "updatedAt": "2024-02-05T02:35:56.569Z"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tier": {
+      "post": {
+        "tags": [
+          "tier"
+        ],
+        "summary": "add new tier",
+        "description": "",
+        "operationId": "tierAdd",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "tier_name": {
+                  "type": "string",
+                  "example": "Silver"
+                },
+                "min_point": {
+                  "type": "number",
+                  "example": 0
+                },
+                "max_point": {
+                  "type": "number",
+                  "example": 100
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "schema": {
+              "type": "object",
+              "example": {
+                "data": {
+                  "tierName": "Silver",
+                  "minPoint": 0,
+                  "maxPoint": 100,
+                  "updatedAt": "2024-02-05T02:40:17.707Z",
+                  "createdAt": "2024-02-05T02:40:17.707Z"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "tier"
+        ],
+        "summary": "add new tier",
+        "description": "",
+        "operationId": "updateTier",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "tier_name": {
+                  "type": "string",
+                  "example": "Silver"
+                },
+                "min_point": {
+                  "type": "number",
+                  "example": 0
+                },
+                "max_point": {
+                  "type": "number",
+                  "example": 200
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "schema": {
+              "type": "object",
+              "example": {
+                "message": "Yeyy... Request Send With Successfully"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "tier"
+        ],
+        "summary": "get all tier",
+        "description": "",
+        "operationId": "getTiers",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "schema": {
+              "type": "object",
+              "example": {
+                "data": [
+                  {
+                    "tierName": "Bronze",
+                    "minPoint": 0,
+                    "maxPoint": 50,
+                    "createdAt": "2024-02-03T08:47:23.523Z",
+                    "updatedAt": "2024-02-03T08:48:48.308Z"
+                  },
+                  {
+                    "tierName": "Silver",
+                    "minPoint": 0,
+                    "maxPoint": 200,
+                    "createdAt": "2024-02-05T02:40:17.707Z",
+                    "updatedAt": "2024-02-05T02:41:54.221Z"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tier/{id}": {
+      "delete": {
+        "tags": [
+          "tier"
+        ],
+        "summary": "delete Tier",
+        "description": "",
+        "operationId": "deleteTier",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "tier name",
+            "required": true,
+            "default": "Silver"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "schema": {
+              "type": "object",
+              "example": {
+                "message": "Yeyy... Request Send With Successfully"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/report/earned": {
+      "get": {
+        "tags": [
+          "report"
+        ],
+        "summary": "report eraned",
+        "description": "",
+        "operationId": "reportEraned",
+        "parameters": [
+          {
+            "name": "memberId",
+            "in": "query",
+            "type": "string",
+            "description": "member id",
+            "required": false
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "type": "string",
+            "description": "start date range",
+            "required": false
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "type": "string",
+            "description": "start date range",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "schema": {
+              "type": "object",
+              "example": {
+                "data": [
+                  {
+                    "id": 17,
+                    "transactionName": "Promo Member Get Member",
+                    "transactionDate": "2024-02-03T13:57:02.343Z",
+                    "type": "earned",
+                    "amount": 1000,
+                    "initialPoint": 0,
+                    "memberId": 1,
+                    "createdAt": "2024-02-03T13:57:02.344Z",
+                    "updatedAt": "2024-02-03T13:57:02.344Z",
+                    "memberNo": 1,
+                    "memberName": "John Doe",
+                    "balance": 1000
+                  },
+                  {
+                    "id": 18,
+                    "transactionName": "Promo Member Get Member",
+                    "transactionDate": "2024-02-03T13:57:25.123Z",
+                    "type": "earned",
+                    "amount": 1000,
+                    "initialPoint": 1000,
+                    "memberId": 1,
+                    "createdAt": "2024-02-03T13:57:25.123Z",
+                    "updatedAt": "2024-02-03T13:57:25.123Z",
+                    "memberNo": 1,
+                    "memberName": "John Doe",
+                    "balance": 2000
+                  },
+                  0
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/report/redeemed": {
+      "get": {
+        "tags": [
+          "report"
+        ],
+        "summary": "report eraned",
+        "description": "",
+        "operationId": "reportRedeemed",
+        "parameters": [
+          {
+            "name": "memberId",
+            "in": "query",
+            "type": "string",
+            "description": "member id",
+            "required": false
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "type": "string",
+            "description": "start date range",
+            "required": false
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "type": "string",
+            "description": "start date range",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "schema": {
+              "type": "object",
+              "example": {
+                "data": [
+                  {
+                    "id": 20,
+                    "transactionName": "Point Redeem",
+                    "transactionDate": "2024-02-03T14:10:17.325Z",
+                    "type": "redeemed",
+                    "amount": 1,
+                    "initialPoint": 2100,
+                    "memberId": 1,
+                    "createdAt": "2024-02-03T14:10:17.326Z",
+                    "updatedAt": "2024-02-03T14:10:17.326Z",
+                    "memberNo": 1,
+                    "memberName": "John Doe",
+                    "balance": 2099
+                  },
+                  {
+                    "id": 21,
+                    "transactionName": "Point Redeem",
+                    "transactionDate": "2024-02-03T14:10:35.924Z",
+                    "type": "redeemed",
+                    "amount": 1,
+                    "initialPoint": 2099,
+                    "memberId": 1,
+                    "createdAt": "2024-02-03T14:10:35.924Z",
+                    "updatedAt": "2024-02-03T14:10:35.924Z",
+                    "memberNo": 1,
+                    "memberName": "John Doe",
+                    "balance": 2098
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/report/export": {
+      "get": {
+        "tags": [
+          "report"
+        ],
+        "summary": "export data to xlsx and pdf",
+        "description": "returning download xlsx and pdf link",
+        "operationId": "export",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "schema": {
+              "type": "object",
+              "example": {
+                "data": {
+                  "xlsx": "http://localhost:5000/p/export/report-2024-02-05.xlsx",
+                  "pdf": "http://localhost:5000/p/export/report-2024-02-05.pdf"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

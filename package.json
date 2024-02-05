@@ -5,6 +5,7 @@
   "scripts": {
     "start": "NODE_ENV=production node dist/index.js",
     "dev": "tsup src/index.ts --watch --sourcemap inline --onSuccess \"node dist/index.js\"",
+    "seed": "ts-node src/model/seed/index.ts",
     "build": "npm run clean && tsc && tsc-alias",
     "clean": "rm -rf dist"
   },
@@ -37,6 +38,7 @@
     "@types/morgan": "^1.9.4",
     "@types/node-cron": "^3.0.11",
     "prettier": "^3.2.4",
+    "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.5",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.0.4"

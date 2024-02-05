@@ -51,11 +51,6 @@ export const memberDetail = async (
       where: {
         id: id,
       },
-      include: [
-        {
-          model: Member,
-        },
-      ],
     });
 
     if (!member) {
