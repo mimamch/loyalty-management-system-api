@@ -33,15 +33,6 @@ const createServer = async () => {
   app.use(notFoundHandlerMiddleware);
   app.use(errorHandlerMiddleware);
 
-  // await User.sync();
-  // await Member.sync({ force: true });
-  // await PointHistory.sync();
-  // await Tier.sync({ force: true });
-  // await Transaction.sync();
-  // await TransactionProduct.sync();
-  // await Loyalty.sync({ force: true });
-  // await PointHistory.sync({ force: true });
-
   initScheduler(); // init scheduler for birthday reward
 
   return app;
